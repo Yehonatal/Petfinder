@@ -19,7 +19,7 @@ const Results = ({ pets }) => {
     };
     return (
         <div className="container_border shadow-lg flex-1 flex flex-col justify-between">
-            <div className="flex-1 grid grid-cols-3 gap-4 p-4 grid-rows-2  ">
+            <div className="flex-1 grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 grid-rows-2  ">
                 {pets && pets.length ? (
                     currentPets.map((p) => (
                         <Pet
