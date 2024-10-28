@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import useBreedList from "../hooks/useBreedList";
 import fullSearch from "../services/fullSearch";
 import { useQuery } from "@tanstack/react-query";
-/* eslint-disable react/prop-types */
-const ANIMALS = ["Cat", "Dog", "Rabbit", "Reptile", "Bird"];
+import { ANIMALS, useForm } from "../hooks/useForm";
 
 const Form = ({ setPets }) => {
     const [requestParams, setRequestParams] = useState({
@@ -35,7 +35,7 @@ const Form = ({ setPets }) => {
 
     return (
         <form
-            className="flex flex-col gap-6 p-6 bg-transparent"
+            className="flex lg:flex-col gap-6 pt-6 px-6 lg:p-6 bg-transparent"
             onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);

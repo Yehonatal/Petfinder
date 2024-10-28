@@ -1,7 +1,5 @@
-export const ANIMALS = ["cat", "dog", "rabbit", "reptile", "bird"];
+export const ANIMALS = ["Cat", "Dog", "Rabbit", "Reptile", "Bird"];
 
-const useForm = () => {
-    return <div>useForm</div>;
+export const useForm = () => {
+    return () => {};
 };
-
-export default useForm;

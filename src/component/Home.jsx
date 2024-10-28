@@ -6,7 +6,7 @@ const Home = () => {
     const [pets, setPets] = useState([]);
 
     return (
-        <div className="flex flex-row gap-4 max-h-max  mt-10">
+        <div className="flex flex-col lg:flex-row gap-4 max-h-max  mt-10">
             <Search setPets={setPets} />
             <Results pets={pets} />
         </div>

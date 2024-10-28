@@ -7,7 +7,7 @@ const Search = ({ setPets }) => {
     const [adoptedPets, _] = useContext(adoptedPetsContext);
 
     return (
-        <div className="container_border w-[450px] h-[80vh] shadow-lg">
+        <div className="container_border lg:w-[450px] lg:h-[80vh] shadow-lg">
             <Form setPets={setPets} />
             <hr className="my-10 border-t-[3px]  border-[var(--border)]" />
             {adoptedPets.length > 0 ? (
