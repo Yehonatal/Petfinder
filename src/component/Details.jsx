@@ -26,8 +26,8 @@ const Details = () => {
         );
     const pet = results.data.pets[0];
     return (
-        <div className="flex flex-row gap-4 max-h-max  mt-10">
-            <div className="container_border w-[450px] h-[80vh]  shadow-lg pt-4">
+        <div className="flex flex-col lg:flex-row gap-4 max-h-max  mt-10">
+            <div className="order-2 lg:order-1 container_border lg:w-[450px] lg:h-[80vh]  shadow-lg pt-4">
                 <h2 className="text-2xl font-extrabold uppercase">
                     {pet.name}
                 </h2>
@@ -94,8 +94,7 @@ const Details = () => {
                     </Modal>
                 ) : null}
             </div>
-
-            <div className="container_border shadow-lg flex-1 flex flex-col justify-between">
+            <div className="order-1 lg:order-2 container_border shadow-lg flex-1 flex flex-col justify-between">
                 <Carousel images={pet.images} />
             </div>
         </div>
