@@ -18,7 +18,7 @@ const Results = ({ pets }) => {
         setCurrentPage(pageNumber);
     };
     return (
-        <div className="border-2  shadow-lg flex-1 flex flex-col justify-between">
+        <div className="container_border shadow-lg flex-1 flex flex-col justify-between">
             <div className="flex-1 grid grid-cols-3 gap-4 p-4 grid-rows-2  ">
                 {pets && pets.length ? (
                     currentPets.map((p) => (
@@ -40,7 +40,7 @@ const Results = ({ pets }) => {
                     </div>
                 )}
             </div>
-            <div className="border-t-2 p-2 flex justify-center">
+            <div className="border-t-[3px] border-[var(--border)] p-2 flex justify-center">
                 <Stack spacing={2}>
                     <Pagination
                         count={totalPages}

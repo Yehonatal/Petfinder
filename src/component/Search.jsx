@@ -7,9 +7,9 @@ const Search = ({ setPets }) => {
     const [adoptedPets, _] = useContext(adoptedPetsContext);
 
     return (
-        <div className="border-2 w-[450px] h-[80vh]  shadow-lg">
+        <div className="container_border w-[450px] h-[80vh] shadow-lg">
             <Form setPets={setPets} />
-            <hr className="my-10" />
+            <hr className="my-10 border-t-[3px]  border-[var(--border)]" />
             {adoptedPets.length > 0 ? (
                 adoptedPets.map((pet, id) => (
                     <div key={id} className=" flex m-6">

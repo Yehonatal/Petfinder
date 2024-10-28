@@ -49,7 +49,7 @@ const Form = ({ setPets }) => {
         >
             <label htmlFor="location" className="">
                 <input
-                    className="w-full px-4 py-2 border border-gray-300  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     type="text"
                     name="location"
                     id="location"
@@ -65,7 +65,7 @@ const Form = ({ setPets }) => {
             </label>
             <label htmlFor="animal" className="">
                 <select
-                    className="w-full px-4 py-2 border border-gray-300  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     id="animal"
                     value={animal}
                     onChange={(e) => {
@@ -86,7 +86,7 @@ const Form = ({ setPets }) => {
             <label htmlFor="breed" className="">
                 <select
                     id="breed"
-                    className="w-full px-4 py-2 border border-gray-300  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     disabled={breeds.length === 0}
                     name="breed"
                     value={requestParams.breed}

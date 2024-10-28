@@ -27,7 +27,7 @@ const Details = () => {
     const pet = results.data.pets[0];
     return (
         <div className="flex flex-row gap-4 max-h-max  mt-10">
-            <div className="border-2 w-[450px] h-[80vh]  shadow-lg pt-4">
+            <div className="container_border w-[450px] h-[80vh]  shadow-lg pt-4">
                 <h2 className="text-2xl font-extrabold uppercase">
                     {pet.name}
                 </h2>
@@ -75,7 +75,7 @@ const Details = () => {
 
                 {showModal ? (
                     <Modal>
-                        <div className="border-2 m-2 p-8 flex flex-col text-center shadow-lg">
+                        <div className="container_border m-2 p-8 flex flex-col text-center shadow-lg">
                             <h1>Are you sure you want to adopt {pet.name}?</h1>
                             <div className="buttons mt-4 flex gap-4 justify-center">
                                 <button
@@ -95,7 +95,7 @@ const Details = () => {
                 ) : null}
             </div>
 
-            <div className="border-2  shadow-lg flex-1 flex flex-col justify-between">
+            <div className="container_border shadow-lg flex-1 flex flex-col justify-between">
                 <Carousel images={pet.images} />
             </div>
         </div>

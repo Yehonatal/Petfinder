@@ -6,14 +6,14 @@ const pet = ({ name, breed, images, location, id }) => {
             : images[0];
 
     return (
-        <div className="border shadow-lg">
+        <div className="container_border shadow-lg">
             <Link to={`/details/${id}`} className="  ">
                 <div className="">
                     <img src={hero} alt={name} className="object-cover" />
                 </div>
                 <div className=" p-2">
-                    <h2 className="font-extrabold">{name}</h2>
-                    <h4 className=" text-sm ">
+                    <h2 className="font-extrabold text-xl">{name}</h2>
+                    <h4 className=" text-sm text-[var(--text)]">
                         {breed} - {location}
                     </h4>
                 </div>
