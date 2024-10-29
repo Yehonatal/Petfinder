@@ -1,16 +1,19 @@
-import Search from "./Search";
-import Results from "./Results";
-import { useState } from "react";
+import Search from './Search'
+import Results from './Results'
+import { useState, useDeferredValue, useMemo } from 'react'
 
 const Home = () => {
-    const [pets, setPets] = useState([]);
+    const [pets, setPets] = useState([])
+    const deferedPets = useDeferredValue(pets)
+    const renderedPets = useMemo(() => <Results pets={deferedPets} />, [deferedPets])
+
 
     return (
-        <div className="flex flex-col lg:flex-row md:flex-row gap-4 max-h-max  mt-10">
+        <div className="mt-10 flex max-h-max flex-col gap-4 md:flex-row lg:flex-row">
             <Search setPets={setPets} />
-            <Results pets={pets} />
+            {renderedPets}
         </div>
-    );
-};
+    )
+}
 
-export default Home;
+export default Home

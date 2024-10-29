@@ -1,25 +1,26 @@
 /* eslint-disable react/prop-types */
-import Pet from "./Pet";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
-import { useState } from "react";
+import Pet from './Pet'
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+
+import { useState } from 'react'
 const Results = ({ pets }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1)
+    const itemsPerPage = 6
 
-    const totalPages = Math.ceil(pets.length / itemsPerPage);
-    const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
+    const totalPages = Math.ceil(pets.length / itemsPerPage)
+    const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages))
 
-    const indexOfLastPet = validCurrentPage * itemsPerPage;
-    const indexOfFirstPet = indexOfLastPet - itemsPerPage;
-    const currentPets = pets.slice(indexOfFirstPet, indexOfLastPet);
+    const indexOfLastPet = validCurrentPage * itemsPerPage
+    const indexOfFirstPet = indexOfLastPet - itemsPerPage
+    const currentPets = pets.slice(indexOfFirstPet, indexOfLastPet)
 
     const handlePageChange = (e, pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
+        setCurrentPage(pageNumber)
+    }
     return (
-        <div className="container_border shadow-lg flex-1 flex flex-col justify-between">
-            <div className="flex-1 grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 grid-rows-2  ">
+        <div className="container_border flex flex-1 flex-col justify-between shadow-lg">
+            <div className="grid flex-1 grid-rows-2 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
                 {pets && pets.length ? (
                     currentPets.map((p) => (
                         <Pet
@@ -33,14 +34,14 @@ const Results = ({ pets }) => {
                         />
                     ))
                 ) : (
-                    <div className="flex items-center justify-center col-span-full row-span-full">
-                        <h1 className="font-extrabold text-center">
+                    <div className="col-span-full row-span-full flex items-center justify-center">
+                        <h1 className="text-center font-extrabold">
                             No Pets Found!
                         </h1>
                     </div>
                 )}
             </div>
-            <div className="border-t-[3px] border-[var(--border)] p-2 flex justify-center">
+            <div className="flex justify-center border-t-[3px] border-[var(--border)] p-2">
                 <Stack spacing={2}>
                     <Pagination
                         count={totalPages}
@@ -53,7 +54,7 @@ const Results = ({ pets }) => {
                 </Stack>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Results;
+export default Results

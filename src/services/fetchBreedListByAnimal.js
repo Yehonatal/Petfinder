@@ -1,16 +1,16 @@
 const fetchBreedListByAnimal = async ({ queryKey }) => {
-    const animal = queryKey[1];
+    const animal = queryKey[1]
 
     const apiRes = await fetch(
-        `https://pets-v2.dev-apis.com/breeds?animal=${animal.toLowerCase()}`
-    );
+        `https://pets-v2.dev-apis.com/breeds?animal=${animal.toLowerCase()}`,
+    )
 
     if (!apiRes.ok) {
-        throw new Error(`API request failed with status ${apiRes.status}`);
+        throw new Error(`API request failed with status ${apiRes.status}`)
     }
-    const data = await apiRes.json();
+    const data = await apiRes.json()
 
-    return data;
-};
+    return data
+}
 
-export default fetchBreedListByAnimal;
+export default fetchBreedListByAnimal

@@ -1,42 +1,41 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState } from 'react'
 
 const Carousel = ({
-    images = ["http://pets-images.dev-apis.com/pets/none.jpg"],
+    images = ['http://pets-images.dev-apis.com/pets/none.jpg'],
 }) => {
-    const [active, setActive] = useState(0);
+    const [active, setActive] = useState(0)
 
     const handleClick = (i) => {
-        setActive(i);
-    };
+        setActive(i)
+    }
 
     return (
-        <div className="flex lg:flex-col lg:h-[80vh] lg:gap-4">
-            <div className="lg:w-full lg:h-[85%] object-cover flex justify-center">
+        <div className="flex lg:h-[80vh] lg:flex-col lg:gap-4">
+            <div className="flex justify-center object-cover lg:h-[85%] lg:w-full">
                 <img
                     src={images[active]}
                     alt="animal hero"
-                    className="object-fit h-full w-full "
+                    className="object-fit h-full w-full"
                 />
-            </div>
-
-            <div className="lg:flex gap-2 w-[30%] lg:h-[15%] overflow-y-auto lg:w-full mt-2 p-2 scrollbar-thin scrollbar-thumb-gray-300  ">
+            </div>{' '}
+            <div className="scrollbar-thin scrollbar-thumb-gray-300 mt-2 w-[30%] gap-2 overflow-y-auto p-2 lg:flex lg:h-[15%] lg:w-full">
                 {images.map((photo, index) => (
                     <img
                         onClick={() => handleClick(index)}
                         key={photo}
                         src={photo}
                         alt="animal thumbnail"
-                        className={`lg:w-[100px] lg:h-auto h-[50px] object-cover cursor-pointer  transition-transform duration-200 hover:scale-105 ${
+                        className={`h-[50px] cursor-pointer object-cover transition-transform duration-200 hover:scale-105 lg:h-auto lg:w-[100px] ${
                             index === active
-                                ? "border-4 border-[#646cff] shadow-md"
-                                : "border border-gray-300"
+                                ? 'border-4 border-[#646cff] shadow-md'
+                                : 'border border-gray-300'
                         }`}
                     />
                 ))}
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Carousel;
+export default Carousel

@@ -1,55 +1,58 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import useBreedList from "../hooks/useBreedList";
-import fullSearch from "../services/fullSearch";
-import { useQuery } from "@tanstack/react-query";
-import { ANIMALS, useForm } from "../hooks/useForm";
+import { useState, useEffect, useTransition } from 'react'
+import useBreedList from '../hooks/useBreedList'
+import fullSearch from '../services/fullSearch'
+import { useQuery } from '@tanstack/react-query'
+import { ANIMALS } from '../hooks/useForm'
 
 const Form = ({ setPets }) => {
     const [requestParams, setRequestParams] = useState({
-        location: "",
-        animal: "",
-        breed: "",
-    });
+        location: '',
+        animal: '',
+        breed: '',
+    })
 
-    const [animal, setAnimal] = useState("");
-    const [breeds] = useBreedList(animal);
+    const [animal, setAnimal] = useState('')
+    const [breeds] = useBreedList(animal)
+    const [isPending, startTransition] = useTransition()
 
     const { data, refetch, isSuccess } = useQuery({
-        queryKey: ["searchPets", requestParams],
+        queryKey: ['searchPets', requestParams],
         queryFn: fullSearch,
         enabled: Boolean(requestParams.animal),
         onSuccess: (data) => {
-            setPets(data.pets);
+            setPets(data.pets)
         },
         onError: (error) => {
-            console.error("Error fetching pets:", error);
+            console.error('Error fetching pets:', error)
         },
-    });
+    })
 
     useEffect(() => {
         if (isSuccess) {
-            setPets(data?.pets);
+            setPets(data?.pets)
         }
-    }, [isSuccess, data, setPets]);
+    }, [isSuccess, data, setPets])
 
     return (
         <form
-            className="flex lg:flex-col gap-6 pt-6 px-6 lg:p-6 bg-transparent"
+            className="flex gap-6 bg-transparent px-6 pt-6 lg:flex-col lg:p-6"
             onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
+                e.preventDefault()
+                const formData = new FormData(e.target)
                 setRequestParams({
-                    location: formData.get("location") || "",
-                    animal: formData.get("animal") || "",
-                    breed: formData.get("breed") || "",
-                });
-                refetch();
+                    location: formData.get('location') || '',
+                    animal: formData.get('animal') || '',
+                    breed: formData.get('breed') || '',
+                })
+                startTransition(() => {
+                    refetch()
+                 })
             }}
         >
             <label htmlFor="location" className="">
                 <input
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="form-input container_border w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#535bf2]"
                     type="text"
                     name="location"
                     id="location"
@@ -65,16 +68,16 @@ const Form = ({ setPets }) => {
             </label>
             <label htmlFor="animal" className="">
                 <select
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="container_border w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#535bf2]"
                     id="animal"
                     value={animal}
                     onChange={(e) => {
-                        setAnimal(e.target.value);
+                        setAnimal(e.target.value)
                         setRequestParams((prev) => ({
                             ...prev,
                             animal: e.target.value,
-                            breed: "",
-                        }));
+                            breed: '',
+                        }))
                     }}
                 >
                     <option value="">Select an animal</option>
@@ -86,7 +89,7 @@ const Form = ({ setPets }) => {
             <label htmlFor="breed" className="">
                 <select
                     id="breed"
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="container_border w-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#535bf2] disabled:opacity-50"
                     disabled={breeds.length === 0}
                     name="breed"
                     value={requestParams.breed}
@@ -103,8 +106,26 @@ const Form = ({ setPets }) => {
                     ))}
                 </select>
             </label>
-        </form>
-    );
-};
 
-export default Form;
+            {isPending ? (
+             <div>
+                <button
+                    className="container_border w-full px-4 py-2 text-white bg-[#535bf2] hover:bg-[#4548f5] focus:outline-none focus:ring-2 focus:ring-[#535bf2]"
+                    type="submit"
+                >
+                    Loading ...
+                </button>
+             </div>   
+            ):(
+                <button
+                    className="container_border w-full px-4 py-2 text-white bg-[#535bf2] hover:bg-[#4548f5] focus:outline-none focus:ring-2 focus:ring-[#535bf2]"
+                    type="submit"
+                >
+                    Search Pets
+                </button>
+            )}
+        </form>
+    )
+}
+
+export default Form

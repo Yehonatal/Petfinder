@@ -2,104 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-    --border: #44424242;
-    --bg: #272626;
-    --text: white;
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.container_border {
-    border: 3px solid var(--border) !important;
-    background-color: var(--bg);
-}
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-a:hover {
-    color: #535bf2;
-}
-
-body {
-    border-radius: 10px;
-    margin: 0 auto;
-    min-width: 320px;
-    max-width: 1280px;
-    width: 100%;
-}
-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-}
-h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-}
-
-button {
-    border: 1px solid transparent;
-    padding: 0.3em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #1a1a1a;
-    cursor: pointer;
-    transition: border-color 0.25s;
-}
-button:hover {
-    border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
     :root {
-        color: #213547;
-        background-color: #ffffff;
-        --border: #2b29291a;
-        --bg: #e4edf8ab;
-        --text: black;
+        font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+        line-height: 1.5;
+        font-weight: 400;
+
+        color-scheme: light dark;
+        color: theme('colors.text');
+        background-color: #242424;
+        --border: theme('colors.border');
+        --bg: theme('colors.bg');
+        --text: theme('colors.text');
+
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
+
+    body {
+        @apply mx-auto w-full min-w-320 max-w-1280 rounded-custom;
+    }
+
+    header {
+        @apply flex flex-row items-center justify-start;
+    }
+
+    h1 {
+        @apply text-h1 leading-tight;
+    }
+
+    a {
+        @apply font-medium text-link no-underline;
+    }
+
     a:hover {
-        color: #747bff;
+        @apply text-linkHover;
     }
+
     button {
-        background-color: #f9f9f9;
+        @apply cursor-pointer border border-transparent bg-buttonBg px-4 py-1.5 font-medium transition-colors duration-200;
     }
-}
-#modal {
-    background-color: rgba(182, 182, 182, 0.527);
-    backdrop-filter: 100px linear;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#modal > div {
-    padding: 15px;
+
+    button:hover {
+        @apply border-link;
+    }
+
+    button:focus,
+    button:focus-visible {
+        outline: 4px auto -webkit-focus-ring-color;
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            color: theme('colors.lightText');
+            background-color: theme('colors.lightBg');
+            --border: theme('colors.lightBorder');
+            --bg: theme('colors.lightBgSecondary');
+            --text: theme('colors.lightText');
+        }
+
+        a:hover {
+            color: #747bff;
+        }
+
+        button {
+            background-color: theme('colors.lightButtonBg');
+        }
+    }
 }
 
-#modal:empty {
-    display: none;
+@layer components {
+    .container_border {
+        border: 3px solid var(--border) !important;
+        background-color: var(--bg);
+    }
+
+    #modal {
+        @apply fixed inset-0 z-10 flex items-center justify-center;
+        background-color: rgba(182, 182, 182, 0.527);
+        backdrop-filter: blur(100px);
+    }
+
+    #modal > div {
+        @apply p-15;
+    }
+
+    #modal:empty {
+        display: none;
+    }
 }
