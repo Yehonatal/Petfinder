@@ -1,11 +1,13 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import AdoptedPetsContext from "./context/AdoptedPetsContext";
-import Home from "./component/Home";
-import Details from "./component/Details";
-import NotFound from "./component/NotFound";
+import { useEffect, useState, lazy, Suspense } from "react";
+import AdoptedPetsContext from "../context/AdoptedPetsContext";
+
 import "./App.css";
+
+const Home = lazy(() => import("./Home"));
+const Details = lazy(() => import("./Details"));
+const NotFound = lazy(() => import("./NotFound"));
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -34,6 +36,11 @@ function App() {
     return (
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
+                <Suspense fallback={
+                    <div className="flex justify-center items-center h-screen">
+                            <span className="text-4xl font-extrabold">Loading...</span>
+                    </div>
+                } >
                 <AdoptedPetsContext.Provider
                     value={[adoptedPets, setAdoptedPets]}
                 >
@@ -55,6 +62,7 @@ function App() {
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </AdoptedPetsContext.Provider>
+                </Suspense>
             </QueryClientProvider>
         </BrowserRouter>
     );
