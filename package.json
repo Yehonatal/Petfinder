@@ -9,10 +9,7 @@
     "license": "ISC",
     "scripts": {
         "dev": "vite",
-        "build:client": "vite build --outDir ../dist/client",
-        "build:server": "vite build --outDir ../dist/server --ssr ServerApp.jsx",
-        "build": "npm run build:client && npm run build:server",
-        "start": "node --experimental-fetch server.js",
+        "build": "vite build",
         "lint": "eslint .",
         "pretty": "npx prettier --write .",
         "preview": "vite preview"
