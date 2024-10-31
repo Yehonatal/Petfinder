@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
+import { ChangeEvent, ReactElement, useState } from 'react'
 import Pet from './Pet'
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import {  PetObj } from '../Types/APIResponsesTypes';
 
-import { useState } from 'react'
-const Results = ({ pets }) => {
+const Results = ({ pets }: {pets: PetObj[]}) => {
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
 
@@ -15,7 +16,7 @@ const Results = ({ pets }) => {
     const indexOfFirstPet = indexOfLastPet - itemsPerPage
     const currentPets = pets.slice(indexOfFirstPet, indexOfLastPet)
 
-    const handlePageChange = (e, pageNumber) => {
+    const handlePageChange = (e: ChangeEvent<unknown>, pageNumber: number) => {
         setCurrentPage(pageNumber)
     }
     return (
@@ -25,7 +26,6 @@ const Results = ({ pets }) => {
                     currentPets.map((p) => (
                         <Pet
                             name={p.name}
-                            animal={p.animal}
                             breed={p.breed}
                             images={p.images}
                             location={`${p.city}, ${p.state}`}

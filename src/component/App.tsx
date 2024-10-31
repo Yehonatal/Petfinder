@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useEffect, useState, lazy, Suspense } from 'react'
 import AdoptedPetsContext from '../context/AdoptedPetsContext'
 import '../style/App.css'
+import { PetObj } from '../Types/APIResponsesTypes'
 const Details = lazy(() => import('./Details'))
 const Home = lazy(() => import('./Home'))
 const NotFound = lazy(() => import('./NotFound'))
@@ -12,10 +13,10 @@ const queryClient = new QueryClient({
         staleTime: Infinity,
         cacheTime: Infinity,
         suspense: true,
-    },
+    } as any,
 })
 function App() {
-    const [adoptedPets, setAdoptedPets] = useState([])
+    const [adoptedPets, setAdoptedPets] = useState<PetObj[]>([])
 
     useEffect(() => {
         const savedPets = localStorage.getItem('adoptedPets')
@@ -30,7 +31,7 @@ function App() {
 
     return (
         <div>
-            <AdoptedPetsContext.Provider value={[adoptedPets, setAdoptedPets]}>
+            <AdoptedPetsContext.Provider value={{adoptedPets, setAdoptedPets}}>
                 <Suspense
                     fallback={
                         <div className="flex h-screen items-center justify-center">
@@ -50,9 +51,8 @@ function App() {
                         </header>
 
                         <Routes>
-                            <Route exact path="/" element={<Home />} />
+                            <Route  path="/" element={<Home />} />
                             <Route
-                                exact
                                 path="/details/:id"
                                 element={<Details />}
                             />

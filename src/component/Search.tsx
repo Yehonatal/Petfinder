@@ -1,17 +1,28 @@
 /* eslint-disable react/prop-types */
-import adoptedPetsContext from '../context/AdoptedPetsContext'
+import React, { useContext } from 'react'
+import adoptedPetsContext, { AdoptedPetsContextType } from '../context/AdoptedPetsContext'
 import Form from './Form'
-import { useContext } from 'react'
+import { PetObj } from '../Types/APIResponsesTypes'
 
-const Search = ({ setPets }) => {
-    const [adoptedPets, _] = useContext(adoptedPetsContext)
+interface SearchProps {
+    setPets: (pets: PetObj[]) => void;
+}
+
+const Search = ({setPets}: SearchProps) => {
+    const context = useContext(adoptedPetsContext)
+
+    if (!context){
+        throw new Error("How would you like it if you just operated with zero context?")
+    }
+
+    const {adoptedPets} = context;
 
     return (
         <div className="container_border shadow-lg lg:h-[80vh] lg:w-[450px]">
             <Form setPets={setPets} />
             <hr className="my-10 border-t-[3px] border-[var(--border)]" />
             {adoptedPets.length > 0 ? (
-                adoptedPets.map((pet, id) => (
+                adoptedPets.map((pet: PetObj, id:number) => (
                     <div key={id} className="m-6 flex">
                         <img
                             src={pet.images[0]}

@@ -4,16 +4,25 @@ import { useNavigate, useParams } from 'react-router-dom'
 import fetchPetDetails from '../services/fetchPetDetails'
 import AdoptedPetsContext from '../context/AdoptedPetsContext'
 import Carousel from './Carousel'
+import ErrorBoundary from '../services/ErrorBoundary'
 
 const Modal = lazy(() => import('./Modal'))
+
 
 const Details = () => {
     const [showModal, setShowModal] = useState(false)
     const navigate = useNavigate()
 
-    const [adoptedPets, setAdoptedPets] = useContext(AdoptedPetsContext)
+    const context = useContext(AdoptedPetsContext)
+    if (!context){
+        throw new Error("I need context my G!")
+    }
+    const {adoptedPets, setAdoptedPets} = context
 
     const { id } = useParams()
+    if (!id){
+        throw new Error("I need an Id my brother!!")
+    }
     const results = useQuery({
         queryKey: ['details', id],
         queryFn: fetchPetDetails,
@@ -26,7 +35,12 @@ const Details = () => {
                 <h2 className="loading">Loading...</h2>
             </div>
         )
-    const pet = results.data.pets[0]
+
+    const pet  = results?.data?.pets[0]
+
+    if (!pet){
+        throw new Error("Come on No pets? found!")
+    }
     return (
         <div className="mt-10 flex max-h-max flex-col gap-4 lg:flex-row">
             <div className="container_border order-2 pt-4 shadow-lg lg:order-1 lg:h-[80vh] lg:w-[450px]">
@@ -103,4 +117,12 @@ const Details = () => {
     )
 }
 
-export default Details
+
+
+export default function DetailsErrorBoundary(){
+    return (
+        <ErrorBoundary>
+            <Details />
+        </ErrorBoundary>
+    )
+}

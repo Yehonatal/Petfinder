@@ -1,12 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 
+interface IProps {
+    images: string[]
+}
+
 const Carousel = ({
     images = ['http://pets-images.dev-apis.com/pets/none.jpg'],
-}) => {
-    const [active, setActive] = useState(0)
+}: IProps ) => {
+    const [active, setActive] = useState<number>(0)
 
-    const handleClick = (i) => {
+    const handleClick = (i:number) => { 
         setActive(i)
     }
 

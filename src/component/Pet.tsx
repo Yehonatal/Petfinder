@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom'
-const pet = ({ name, breed, images, location, id }) => {
-    let hero =
+
+interface IProps {
+    id: number
+    name: string
+    breed: string
+    images: string[]
+    location: string
+}
+
+const pet = (props : IProps) => {
+    const { id, name, breed, images, location } = props
+    const hero: string =
         images.length === 0
             ? 'http://pets-images.dev-apis.com/pets/none.jpg'
             : images[0]
