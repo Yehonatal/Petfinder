@@ -1,9 +1,11 @@
 import { Link, Route, Routes } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useEffect, useState, lazy, Suspense } from 'react'
-import AdoptedPetsContext from '../context/AdoptedPetsContext'
+import { useEffect, lazy, Suspense } from 'react'
+// import AdoptedPetsContext from '../context/AdoptedPetsContext'
+import { Provider } from 'react-redux'
+import store from '../store'
 import '../style/App.css'
-import { PetObj } from '../Types/APIResponsesTypes'
+// import { PetObj } from '../Types/APIResponsesTypes'
 const Details = lazy(() => import('./Details'))
 const Home = lazy(() => import('./Home'))
 const NotFound = lazy(() => import('./NotFound'))
@@ -16,22 +18,22 @@ const queryClient = new QueryClient({
     } as any,
 })
 function App() {
-    const [adoptedPets, setAdoptedPets] = useState<PetObj[]>([])
+    // const [adoptedPets, setAdoptedPets] = useState<PetObj[]>([])
 
-    useEffect(() => {
-        const savedPets = localStorage.getItem('adoptedPets')
-        if (savedPets) {
-            setAdoptedPets(JSON.parse(savedPets))
-        }
-    }, [])
+    // useEffect(() => {
+    //     const savedPets = localStorage.getItem('adoptedPets')
+    //     if (savedPets) {
+    //         setAdoptedPets(JSON.parse(savedPets))
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        localStorage.setItem('adoptedPets', JSON.stringify(adoptedPets))
-    }, [adoptedPets])
+    // useEffect(() => {
+    //     localStorage.setItem('adoptedPets', JSON.stringify(adoptedPets))
+    // }, [adoptedPets])
 
     return (
         <div>
-            <AdoptedPetsContext.Provider value={{adoptedPets, setAdoptedPets}}>
+            <Provider store={store}>
                 <Suspense
                     fallback={
                         <div className="flex h-screen items-center justify-center">
@@ -60,7 +62,7 @@ function App() {
                         </Routes>
                     </QueryClientProvider>
                 </Suspense>
-            </AdoptedPetsContext.Provider>
+            </Provider>
         </div>
     )
 }
