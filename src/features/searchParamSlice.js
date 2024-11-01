@@ -7,7 +7,7 @@ const searchParamSlice = createSlice({
             location: "",
             animal: "",
             breed: "",
-        }
+        },
     },
     reducers: {
         all: (state, action) => {
@@ -23,10 +23,10 @@ const searchParamSlice = createSlice({
         },
         setBreed: (state, action) => {
             state.value.breed = action.payload;
-        }
+        },
     },
 });
 
-export const { all, setLocation, setAnimalP, setBreed } = searchParamSlice.actions;
+export const { all, setLocation, setAnimalP, setBreed } =
+    searchParamSlice.actions;
 export default searchParamSlice.reducer;
-   

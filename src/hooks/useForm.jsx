@@ -15,7 +15,9 @@ export const useForm = (setPets) => {
     const { data, refetch, isSuccess } = useQuery({
         queryKey: ["searchPets", requestParams],
         queryFn: fullSearch,
-        enabled: Boolean(useSelector((state) => state.searchParams.value.animal)),
+        enabled: Boolean(
+            useSelector((state) => state.searchParams.value.animal),
+        ),
         onSuccess: (data) => {
             setPets(data.pets);
         },
@@ -37,8 +39,8 @@ export const useForm = (setPets) => {
             location: formData.get("location") || "",
             animal: formData.get("animal") || "",
             breed: formData.get("breed") || "",
-        }
-        dispatch(all(obj))
+        };
+        dispatch(all(obj));
         refetch();
     };
 
@@ -46,7 +48,6 @@ export const useForm = (setPets) => {
         handleSubmit,
         animal,
         breeds,
-        requestParams,
         setAnimal,
         dispatch,
         setPets,

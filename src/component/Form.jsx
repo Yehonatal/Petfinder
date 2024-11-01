@@ -1,17 +1,15 @@
 /* eslint-disable react/prop-types */
 import { ANIMALS, useForm } from "../hooks/useForm";
-import { setAnimalP, setLocation, setBreed } from "../features/searchParamSlice";
+import {
+    setAnimalP,
+    setLocation,
+    setBreed,
+} from "../features/searchParamSlice";
 import { useSelector } from "react-redux";
 
 const Form = ({ setPets }) => {
-    const {
-        handleSubmit,
-        animal,
-        breeds,
-        requestParams,
-        dispatch,
-        setAnimal,
-    } = useForm(setPets);
+    const { handleSubmit, animal, breeds, dispatch, setAnimal } =
+        useForm(setPets);
 
     return (
         <form
@@ -25,10 +23,10 @@ const Form = ({ setPets }) => {
                     name="location"
                     id="location"
                     placeholder="Enter location"
-                    value={useSelector((state) => state.searchParams.value.location)}
-                    onChange={(e) =>
-                        dispatch(setLocation(e.target.value))
-                    }
+                    value={useSelector(
+                        (state) => state.searchParams.value.location,
+                    )}
+                    onChange={(e) => dispatch(setLocation(e.target.value))}
                 />
             </label>
             <label htmlFor="animal" className="">
@@ -38,7 +36,7 @@ const Form = ({ setPets }) => {
                     value={animal}
                     onChange={(e) => {
                         setAnimal(e.target.value);
-                        dispatch(setAnimalP(e.target.value))
+                        dispatch(setAnimalP(e.target.value));
                     }}
                 >
                     <option value="">Select an animal</option>
@@ -53,10 +51,10 @@ const Form = ({ setPets }) => {
                     className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     disabled={breeds.length === 0}
                     name="breed"
-                    value={useSelector((state) => state.searchParams.value.breed)}
-                    onChange={(e) =>
-                        setBreed(e.target.value)
-                    }
+                    value={useSelector(
+                        (state) => state.searchParams.value.breed,
+                    )}
+                    onChange={(e) => setBreed(e.target.value)}
                 >
                     <option value="">Available breeds</option>
                     {breeds.map((b) => (
