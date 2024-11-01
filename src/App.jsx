@@ -1,9 +1,10 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState, lazy, Suspense } from "react";
-import AdoptedPetsContext from "./context/AdoptedPetsContext";
-
+// import AdoptedPetsContext from "./context/AdoptedPetsContext";
 import "./App.css";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const Home = lazy(() => import("./component/Home"));
 const Details = lazy(() => import("./component/Details"));
@@ -16,23 +17,23 @@ const queryClient = new QueryClient({
     },
 });
 function App() {
-    const [adoptedPets, setAdoptedPets] = useState(() => {
-        try {
-            const savedPets = JSON.parse(localStorage.getItem("adoptedPets"));
-            return savedPets || [];
-        } catch (error) {
-            console.error("Failed to parse localStorage data:", error);
-            return [];
-        }
-    });
+    // const [adoptedPets, setAdoptedPets] = useState(() => {
+    //     try {
+    //         const savedPets = JSON.parse(localStorage.getItem("adoptedPets"));
+    //         return savedPets || [];
+    //     } catch (error) {
+    //         console.error("Failed to parse localStorage data:", error);
+    //         return [];
+    //     }
+    // });
 
-    useEffect(() => {
-        try {
-            localStorage.setItem("adoptedPets", JSON.stringify(adoptedPets));
-        } catch (error) {
-            console.error("Failed to save to localStorage:", error);
-        }
-    }, [adoptedPets]);
+    // useEffect(() => {
+    //     try {
+    //         localStorage.setItem("adoptedPets", JSON.stringify(adoptedPets));
+    //     } catch (error) {
+    //         console.error("Failed to save to localStorage:", error);
+    //     }
+    // }, [adoptedPets]);
     return (
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
@@ -45,9 +46,7 @@ function App() {
                         </div>
                     }
                 >
-                    <AdoptedPetsContext.Provider
-                        value={[adoptedPets, setAdoptedPets]}
-                    >
+                    <Provider store={store}>
                         <header className="">
                             <Link to="/">
                                 <h1 className="font-extrabold text-4xl ">
@@ -65,7 +64,7 @@ function App() {
                             />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
-                    </AdoptedPetsContext.Provider>
+                    </Provider>
                 </Suspense>
             </QueryClientProvider>
         </BrowserRouter>

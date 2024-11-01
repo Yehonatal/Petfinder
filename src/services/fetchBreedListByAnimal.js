@@ -2,7 +2,7 @@ const fetchBreedListByAnimal = async ({ queryKey }) => {
     const animal = queryKey[1];
 
     const apiRes = await fetch(
-        `https://pets-v2.dev-apis.com/breeds?animal=${animal.toLowerCase()}`
+        `https://pets-v2.dev-apis.com/breeds?animal=${animal.toLowerCase()}`,
     );
 
     if (!apiRes.ok) {

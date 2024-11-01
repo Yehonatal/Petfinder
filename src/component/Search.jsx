@@ -1,10 +1,22 @@
 /* eslint-disable react/prop-types */
-import adoptedPetsContext from "../context/AdoptedPetsContext";
+// import adoptedPetsContext from "../context/AdoptedPetsContext";
+import { useDispatch, useSelector } from "react-redux";
 import Form from "./Form";
-import { useContext } from "react";
+import { useEffect } from "react";
+import { setAdoptedPets } from "../features/AdoptedPetSlice";
+// import { useContext } from "react";
 
 const Search = ({ setPets }) => {
-    const [adoptedPets, _] = useContext(adoptedPetsContext);
+    // const [adoptedPets, _] = useContext(adoptedPetsContext);
+    const dispatch = useDispatch();
+    const adoptedPets = useSelector((state) => state.adoptedPets.pets);
+
+    useEffect(() => {
+        const savedPets = JSON.parse(localStorage.getItem("adoptedPets")) || [];
+        if (savedPets.length > 0) {
+            dispatch(setAdoptedPets(savedPets));
+        }
+    }, [dispatch]);
 
     return (
         <div className="container_border lg:w-[450px] lg:h-[80vh] shadow-lg">

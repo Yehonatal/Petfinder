@@ -1,15 +1,18 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import fetchPetDetails from "../services/fetchPetDetails";
-import AdoptedPetsContext from "../context/AdoptedPetsContext";
+// import AdoptedPetsContext from "../context/AdoptedPetsContext";
 import Carousel from "./Carousel";
 import Modal from "./Modal";
+import { useDispatch } from "react-redux";
+import { addPet } from "../features/AdoptedPetSlice";
+
 const Details = () => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
-    const [adoptedPets, setAdoptedPets] = useContext(AdoptedPetsContext);
+    const dispatch = useDispatch();
 
     const { id } = useParams();
     const results = useQuery({
@@ -80,7 +83,7 @@ const Details = () => {
                             <div className="buttons mt-4 flex gap-4 justify-center">
                                 <button
                                     onClick={() => {
-                                        setAdoptedPets([...adoptedPets, pet]);
+                                        dispatch(addPet(pet));
                                         navigate(`/`);
                                     }}
                                 >
