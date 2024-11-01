@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import useBreedList from "../hooks/useBreedList";
 import fullSearch from "../services/fullSearch";
 import { useQuery } from "@tanstack/react-query";
-import { ANIMALS, useForm } from "../hooks/useForm";
+import { ANIMALS } from "../hooks/useForm";
 
 const Form = ({ setPets }) => {
     const [requestParams, setRequestParams] = useState({

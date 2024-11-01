@@ -22,6 +22,7 @@ const Carousel = ({
 
             <div className="lg:flex gap-2 w-[30%] lg:h-[15%] overflow-y-auto lg:w-full mt-2 p-2 scrollbar-thin scrollbar-thumb-gray-300  ">
                 {images.map((photo, index) => (
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events
                     <img
                         onClick={() => handleClick(index)}
                         key={photo}
