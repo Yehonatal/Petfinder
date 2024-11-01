@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import fetchPetDetails from "../services/fetchPetDetails";
-// import AdoptedPetsContext from "../context/AdoptedPetsContext";
 import Carousel from "./Carousel";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { addPet } from "../features/AdoptedPetSlice";
+import { useGetPetQuery } from "../services/petApiService";
 
 const Details = () => {
     const [showModal, setShowModal] = useState(false);
@@ -15,19 +13,14 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const { id } = useParams();
-    const results = useQuery({
-        queryKey: ["details", id],
-        queryFn: fetchPetDetails,
-        enabled: !!id,
-    });
+    const { isLoading, data: pet } = useGetPetQuery(id);
 
-    if (results.isLoading)
+    if (isLoading)
         return (
             <div className="loading-pane">
                 <h2 className="loading">Loading...</h2>
             </div>
         );
-    const pet = results.data.pets[0];
     return (
         <div className="flex flex-col lg:flex-row gap-4 max-h-max  mt-10">
             <div className="order-2 lg:order-1 container_border lg:w-[450px] lg:h-[80vh]  shadow-lg pt-4">

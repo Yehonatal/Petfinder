@@ -1,13 +1,12 @@
 import Search from "./Search";
 import Results from "./Results";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-    const [pets, setPets] = useState([]);
-
+    let pets = useSelector((state) => state.getPets.pets) || [];
     return (
         <div className="flex flex-col lg:flex-row md:flex-row gap-4 max-h-max  mt-10">
-            <Search setPets={setPets} />
+            <Search />
             <Results pets={pets} />
         </div>
     );

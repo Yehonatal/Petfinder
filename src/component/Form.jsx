@@ -5,11 +5,13 @@ import {
     setLocation,
     setBreed,
 } from "../features/searchParamSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const Form = ({ setPets }) => {
-    const { handleSubmit, animal, breeds, dispatch, setAnimal } =
-        useForm(setPets);
+const Form = () => {
+    const { handleSubmit, animal, breeds, setAnimal } = useForm();
+    const location = useSelector((state) => state.searchParams.value.location);
+    const breed = useSelector((state) => state.searchParams.value.breed);
+    const dispatch = useDispatch();
 
     return (
         <form
@@ -18,47 +20,50 @@ const Form = ({ setPets }) => {
         >
             <label htmlFor="location" className="">
                 <input
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="w-full px-4 py-2 container_border focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     type="text"
                     name="location"
                     id="location"
                     placeholder="Enter location"
-                    value={useSelector(
-                        (state) => state.searchParams.value.location,
-                    )}
+                    value={location}
                     onChange={(e) => dispatch(setLocation(e.target.value))}
                 />
             </label>
             <label htmlFor="animal" className="">
                 <select
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    className="w-full px-4 py-2 container_border focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     id="animal"
+                    name="animal"
                     value={animal}
                     onChange={(e) => {
                         setAnimal(e.target.value);
-                        dispatch(setAnimalP(e.target.value));
+                        dispatch(setAnimalP(e.target.value.toLowerCase()));
                     }}
                 >
                     <option value="">Select an animal</option>
                     {ANIMALS.map((a) => (
-                        <option key={a}>{a}</option>
+                        <option key={a} value={a}>
+                            {a}
+                        </option>
                     ))}
                 </select>
             </label>
             <label htmlFor="breed" className="">
                 <select
                     id="breed"
-                    className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
-                    disabled={breeds.length === 0}
+                    className="w-full px-4 py-2 container_border focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
+                    disabled={!breeds || breeds.length === 0}
                     name="breed"
-                    value={useSelector(
-                        (state) => state.searchParams.value.breed,
-                    )}
-                    onChange={(e) => setBreed(e.target.value)}
+                    value={breed}
+                    onChange={(e) => {
+                        dispatch(setBreed(e.target.value));
+                    }}
                 >
                     <option value="">Available breeds</option>
-                    {breeds.map((b) => (
-                        <option key={b}>{b}</option>
+                    {breeds && breeds.map((b) => (
+                        <option key={b} value={b}>
+                            {b}
+                        </option>
                     ))}
                 </select>
             </label>

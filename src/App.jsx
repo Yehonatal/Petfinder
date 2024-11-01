@@ -16,7 +16,6 @@ const queryClient = new QueryClient({
     },
 });
 function App() {
-    
     return (
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
