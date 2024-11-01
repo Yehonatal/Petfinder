@@ -1,51 +1,20 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
-import useBreedList from "../hooks/useBreedList";
-import fullSearch from "../services/fullSearch";
-import { useQuery } from "@tanstack/react-query";
-import { ANIMALS } from "../hooks/useForm";
+import { ANIMALS, useForm } from "../hooks/useForm";
+import {
+    setAnimalP,
+    setLocation,
+    setBreed,
+} from "../features/searchParamSlice";
+import { useSelector } from "react-redux";
 
 const Form = ({ setPets }) => {
-    const [requestParams, setRequestParams] = useState({
-        location: "",
-        animal: "",
-        breed: "",
-    });
-
-    const [animal, setAnimal] = useState("");
-    const [breeds] = useBreedList(animal);
-
-    const { data, refetch, isSuccess } = useQuery({
-        queryKey: ["searchPets", requestParams],
-        queryFn: fullSearch,
-        enabled: Boolean(requestParams.animal),
-        onSuccess: (data) => {
-            setPets(data.pets);
-        },
-        onError: (error) => {
-            console.error("Error fetching pets:", error);
-        },
-    });
-
-    useEffect(() => {
-        if (isSuccess) {
-            setPets(data?.pets);
-        }
-    }, [isSuccess, data, setPets]);
+    const { handleSubmit, animal, breeds, dispatch, setAnimal } =
+        useForm(setPets);
 
     return (
         <form
             className="flex lg:flex-col gap-6 pt-6 px-6 lg:p-6 bg-transparent"
-            onSubmit={(e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target);
-                setRequestParams({
-                    location: formData.get("location") || "",
-                    animal: formData.get("animal") || "",
-                    breed: formData.get("breed") || "",
-                });
-                refetch();
-            }}
+            onSubmit={handleSubmit}
         >
             <label htmlFor="location" className="">
                 <input
@@ -54,13 +23,10 @@ const Form = ({ setPets }) => {
                     name="location"
                     id="location"
                     placeholder="Enter location"
-                    value={requestParams.location}
-                    onChange={(e) =>
-                        setRequestParams((prev) => ({
-                            ...prev,
-                            location: e.target.value,
-                        }))
-                    }
+                    value={useSelector(
+                        (state) => state.searchParams.value.location,
+                    )}
+                    onChange={(e) => dispatch(setLocation(e.target.value))}
                 />
             </label>
             <label htmlFor="animal" className="">
@@ -70,11 +36,7 @@ const Form = ({ setPets }) => {
                     value={animal}
                     onChange={(e) => {
                         setAnimal(e.target.value);
-                        setRequestParams((prev) => ({
-                            ...prev,
-                            animal: e.target.value,
-                            breed: "",
-                        }));
+                        dispatch(setAnimalP(e.target.value));
                     }}
                 >
                     <option value="">Select an animal</option>
@@ -89,13 +51,10 @@ const Form = ({ setPets }) => {
                     className="w-full px-4 py-2 container_border  focus:ring-2 focus:ring-[#535bf2] focus:outline-none"
                     disabled={breeds.length === 0}
                     name="breed"
-                    value={requestParams.breed}
-                    onChange={(e) =>
-                        setRequestParams((prev) => ({
-                            ...prev,
-                            breed: e.target.value,
-                        }))
-                    }
+                    value={useSelector(
+                        (state) => state.searchParams.value.breed,
+                    )}
+                    onChange={(e) => setBreed(e.target.value)}
                 >
                     <option value="">Available breeds</option>
                     {breeds.map((b) => (
@@ -103,6 +62,7 @@ const Form = ({ setPets }) => {
                     ))}
                 </select>
             </label>
+            <button className="border-[2px]">Search for Pet</button>
         </form>
     );
 };
